@@ -1,0 +1,27 @@
+version: '1.0'
+services:
+  frontend:
+    build: ./front_end
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./front_end/src:/app/src
+
+  db:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=username
+      - POSTGRES_DB=database
+
+  backend:
+      build: ./back_end
+      ports:
+        - '5001:5000'
+      command: flask --app src/app run --debug
+      volumes:
+        - ./back_end/src:/app/src
+
+       
